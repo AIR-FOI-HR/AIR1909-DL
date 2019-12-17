@@ -7,38 +7,38 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class MyDb{
+class MyDb : DAO{
 
     //connection to database
     val database = FirebaseDatabase.getInstance().reference
 
     //INSERT functions
-    fun insertUser(user: User){
+    override fun insertUser(user: User){
         database.child("users").child(user.id_user.toString()).setValue(user)
     }
 
-    fun insertStore(store: Store){
+    override fun insertStore(store: Store){
         database.child("store").child(store.id_store.toString()).setValue(store)
     }
 
-    fun insertProduct(product: Product){
+    override fun insertProduct(product: Product){
         database.child("product").child(product.id_product.toString()).setValue(product)
     }
 
-    fun insertOffer(offer: Offer){
+    override fun insertOffer(offer: Offer){
         database.child("offer").child(offer.id_offer.toString()).setValue(offer)
     }
 
-    fun insertDiscount(discount: Discount){
+    override fun insertDiscount(discount: Discount){
         database.child("discount").child(discount.id_discount.toString()).setValue(discount)
     }
 
-    fun insertChart(chart: Chart){
+    override fun insertChart(chart: Chart){
         database.child("chart").child(chart.id_chart.toString()).setValue(chart)
     }
 
     //SELECT * functions
-    fun selectUsers(){
+    override fun selectUsers(){
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values
@@ -56,7 +56,7 @@ class MyDb{
         database.child("users").addValueEventListener(listener)
     }
 
-    fun selectStore(){
+    override fun selectStore(){
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values
@@ -74,7 +74,7 @@ class MyDb{
         database.child("store").addValueEventListener(listener)
     }
 
-    fun selectProduct(){
+    override fun selectProduct(){
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values
@@ -92,7 +92,7 @@ class MyDb{
         database.child("product").addValueEventListener(listener)
     }
 
-    fun selectOffer(){
+    override fun selectOffer(){
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values
@@ -110,7 +110,7 @@ class MyDb{
         database.child("offer").addValueEventListener(listener)
     }
 
-    fun selectDiscount(){
+    override fun selectDiscount(){
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values
@@ -128,7 +128,7 @@ class MyDb{
         database.child("discount").addValueEventListener(listener)
     }
 
-    fun selectChart(){
+    override fun selectChart(){
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values
@@ -147,27 +147,27 @@ class MyDb{
     }
 
     //DELETE functions
-    fun deleteUser(user_id: Int){
+    override fun deleteUser(user_id: Int){
         database.child("users").child(user_id.toString()).removeValue()
     }
 
-    fun deleteStore(store_id: Int){
+    override fun deleteStore(store_id: Int){
         database.child("store").child(store_id.toString()).removeValue()
     }
 
-    fun deleteProduct(product_id: Int){
+    override fun deleteProduct(product_id: Int){
         database.child("product").child(product_id.toString()).removeValue()
     }
 
-    fun deleteOffer(offer_id: Int){
+    override fun deleteOffer(offer_id: Int){
         database.child("users").child(offer_id.toString()).removeValue()
     }
 
-    fun deleteDiscount(discount_id: Int){
+    override fun deleteDiscount(discount_id: Int){
         database.child("discount").child(discount_id.toString()).removeValue()
     }
 
-    fun deleteChart(chart_id: Int){
+    override fun deleteChart(chart_id: Int){
         database.child("chart").child(chart_id.toString()).removeValue()
     }
 }
