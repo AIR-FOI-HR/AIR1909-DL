@@ -20,15 +20,15 @@ interface DAO {
     //SELECT functions
     fun selectUsers(): MutableList<User>
 
-    fun selectStore()
+    fun selectStore(): MutableList<Store>
 
-    fun selectProduct()
+    fun selectProduct(): MutableList<Product>
 
-    fun selectOffer()
+    fun selectOffer(): MutableList<Offer>
 
-    fun selectDiscount()
+    fun selectDiscount(): MutableList<Discount>
 
-    fun selectChart()
+    fun selectChart(): MutableList<Chart>
 
     //DELETE functions
     fun deleteUser(user_id: Int)

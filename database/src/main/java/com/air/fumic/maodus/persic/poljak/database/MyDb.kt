@@ -68,12 +68,26 @@ class MyDb : DAO{
         return users_list
     }
 
-    override fun selectStore(){
+    override fun selectStore(): MutableList<Store> {
+        var stores_list = mutableListOf<Store>()
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values
-                val post = dataSnapshot.value
-                Log.i("querry", post.toString())
+                for (user: DataSnapshot in dataSnapshot.children){
+                    Log.i("users", user.toString())
+                    var id_store = user.child("id_store").value.toString().toInt()
+                    var phone_number = user.child("phone_number").value.toString()
+                    var name = user.child("name").value.toString()
+                    var adress = user.child("adress").value.toString()
+                    var emali = user.child("email").value.toString()
+                    var longitude = user.child("longitude").value.toString()
+                    var laditude = user.child("laditude").value.toString()
+                    var working_hours_from = user.child("working_hours_from").value.toString()
+                    var working_hours_to = user.child("working_hours_to").value.toString()
+                    var description = user.child("description").value.toString()
+
+                    var new_store = Store(id_store = id_store, name = name, adress = adress, email = emali, phone_number = phone_number, longitude = longitude, latitude = laditude, working_hours_from = working_hours_from, working_hours_to = working_hours_to, description = description)
+                    stores_list.add(new_store)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -83,15 +97,23 @@ class MyDb : DAO{
 
         }
 
-        database.child("store").addValueEventListener(listener)
+        database.child("stores").addValueEventListener(listener)
+        return stores_list
     }
 
-    override fun selectProduct(){
+    override fun selectProduct(): MutableList<Product> {
+        var product_list = mutableListOf<Product>()
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values
-                val post = dataSnapshot.value
-                Log.i("querry", post.toString())
+                for (product: DataSnapshot in dataSnapshot.children){
+                    Log.i("users", product.toString())
+                    var id_product = product.child("id_product").value.toString().toInt()
+                    var name = product.child("name").value.toString()
+                    var description = product.child("description").value.toString()
+
+                    var new_product = Product(id_product = id_product, name = name, description = description)
+                    product_list.add(new_product)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -102,14 +124,24 @@ class MyDb : DAO{
         }
 
         database.child("product").addValueEventListener(listener)
+        return product_list
     }
 
-    override fun selectOffer(){
+    override fun selectOffer(): MutableList<Offer> {
+        var offer_list = mutableListOf<Offer>()
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values
-                val post = dataSnapshot.value
-                Log.i("querry", post.toString())
+                for (offer: DataSnapshot in dataSnapshot.children){
+                    Log.i("users", offer.toString())
+                    var id_offer = offer.child("id_offer").value.toString().toInt()
+                    var amount = offer.child("amount").value.toString().toInt()
+                    var price = offer.child("price").value.toString().toDouble()
+                    var id_store = offer.child("id_store").value.toString().toInt()
+                    var id_product = offer.child("id_product").value.toString().toInt()
+
+                    var new_offer = Offer(id_offer = id_offer, amount = amount, price = price, id_store = id_store, id_product = id_product)
+                    offer_list.add(new_offer)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -120,14 +152,24 @@ class MyDb : DAO{
         }
 
         database.child("offer").addValueEventListener(listener)
+        return offer_list
     }
 
-    override fun selectDiscount(){
+    override fun selectDiscount(): MutableList<Discount> {
+        var discount_list = mutableListOf<Discount>()
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values
-                val post = dataSnapshot.value
-                Log.i("querry", post.toString())
+                for (discount: DataSnapshot in dataSnapshot.children){
+                    Log.i("users", discount.toString())
+                    var id_discount = discount.child("id_discount").value.toString().toInt()
+                    var amount = discount.child("discount_amount").value.toString().toDouble()
+                    var date_from = discount.child("date_from").value.toString()
+                    var date_to = discount.child("date_to").value.toString()
+                    var id_offer = discount.child("id_offer").value.toString().toInt()
+
+                    var new_offer = Discount(id_discount = id_discount, discount_amount = amount, date_from = date_from, date_to = date_to, id_offer = id_offer)
+                    discount_list.add(new_offer)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -138,14 +180,23 @@ class MyDb : DAO{
         }
 
         database.child("discount").addValueEventListener(listener)
+        return discount_list
     }
 
-    override fun selectChart(){
+    override fun selectChart(): MutableList<Chart> {
+        var chart_list = mutableListOf<Chart>()
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values
-                val post = dataSnapshot.value
-                Log.i("querry", post.toString())
+                for (chart: DataSnapshot in dataSnapshot.children){
+                    Log.i("users", chart.toString())
+                    var id_chart = chart.child("id_chart").value.toString().toInt()
+                    var amount = chart.child("discount_amount").value.toString().toInt()
+                    var id_user = chart.child("id_user").value.toString().toInt()
+                    var id_discount = chart.child("id_discount").value.toString().toInt()
+
+                    var new_chart = Chart(id_chart = id_chart, amount = amount, id_user = id_user, id_discount = id_discount)
+                    chart_list.add(new_chart)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -156,6 +207,7 @@ class MyDb : DAO{
         }
 
         database.child("chart").addValueEventListener(listener)
+        return chart_list
     }
 
     //DELETE functions
