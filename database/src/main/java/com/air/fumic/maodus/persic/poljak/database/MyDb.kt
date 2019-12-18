@@ -38,12 +38,23 @@ class MyDb : DAO{
     }
 
     //SELECT * functions
-    override fun selectUsers(){
+    override fun selectUsers(): MutableList<User> {
+        var users_list = mutableListOf<User>()
         val listener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values
-                val post = dataSnapshot.value
-                Log.i("querry", post.toString())
+                for (user: DataSnapshot in dataSnapshot.children){
+                    Log.i("users", user.toString())
+                    var id_user = user.child("id_user").value.toString().toInt()
+                    var username = user.child("username").value.toString()
+                    var name = user.child("name").value.toString()
+                    var surname = user.child("surname").value.toString()
+                    var adress = user.child("adress").value.toString()
+                    var emali = user.child("email").value.toString()
+                    var password = user.child("password").value.toString()
+
+                    var new_user = User(id_user = id_user, username = username, name = name, surname = surname, adress = adress, email = emali, password = password)
+                    users_list.add(new_user)
+                }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
@@ -54,6 +65,7 @@ class MyDb : DAO{
         }
 
         database.child("users").addValueEventListener(listener)
+        return users_list
     }
 
     override fun selectStore(){

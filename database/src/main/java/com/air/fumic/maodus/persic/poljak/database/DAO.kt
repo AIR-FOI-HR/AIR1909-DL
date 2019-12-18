@@ -18,7 +18,7 @@ interface DAO {
     fun insertChart(chart: Chart)
 
     //SELECT functions
-    fun selectUsers()
+    fun selectUsers(): MutableList<User>
 
     fun selectStore()
 
